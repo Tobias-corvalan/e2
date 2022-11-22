@@ -1,0 +1,99 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.nav{
+
+    background-color: #252525;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.divisor-error{
+    border: 2.5px solid red;
+}
+.divisor-correcto{
+    border: 2.5px solid green;
+}
+body{
+    background-color: #252525;
+}
+
+section{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+h1{
+    color:#ffff
+}
+.container-input{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+small{
+    color: red;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+#number-id::-webkit-inner-spin-button, #number-id::-webkit-outer-spin-button{
+
+    -webkit-appearance: none;
+    margin: 0;  
+}
+#number-id{ -moz-appearance: textfield;}
+
+#form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#number-id{
+
+    padding: 10px 30px;
+    border-radius: 15px;
+    outline: none;
+    
+}
+.btn-form{
+    padding: 10px 20px;
+    background-color: #ff9900;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+
+
+.card{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+    color: white;
+}
+
+.error{
+    background: red;
+    border-radius: 15px;
+}
+.correct{
+    background: green;
+    border-radius: 15px;
+}
