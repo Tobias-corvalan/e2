@@ -75,67 +75,85 @@ const Pizzas = [
     {
         id: 1,
         nombre: "Especial",
-        ingredientes: ["salsa de tomate","queso","jamón","aceitunas"],
+        ingredientes: ["salsa de tomate","queso","jamón","aceitunas","Morrones"],
+        img: "./Img/pizza-especial.jpg",
         precio: 550
     },
     {
         id: 2,
         nombre: "Americana",
         ingredientes: ["salsa de tomate","queso","jamón","huevo frito","morrón","aceitunas"],
+        img: "./Img/Americana.jpg",
         precio: 1400
     },
     {
         id: 3,
         nombre: "Jamón y Palmitos",
         ingredientes: ["salsa de tomate","queso","jamón","palmitos","morrón"],
+        img: "./Img/Jamon-Palmito.jpg",
         precio: 1500
     },
     {
         id: 4,
         nombre: "Champiñon",
         ingredientes: ["queso","jamon","champiñones","morron", "salsa blanca"],
+        img: "./Img/Pizza-Champ.jpg",
         precio: 1550
     },
     {
         id: 5,
         nombre: "Jamón y ananá",
         ingredientes: ["salsa de tomate","queso","jamon","ananá"],
+        img: "./Img/Jamon-Anana.jpg",
         precio: 1600
     },
     {
         id: 6,
         nombre: "Rúcula y crudo",
         ingredientes: ["salsa de tomate","queso","jamon crudo","rúcula"],
+        img: "./Img/pizza-de-jamon-crudo-rucula-y-tomates-secos.jpg",
         precio: 1850
     },
     {
         id: 7,
         nombre: "Fugazza y roque",
         ingredientes: ["queso","cebolla camamelizada","queso roquefort"],
+        img: "./Img/fugazza.jpg",
         precio: 590
     }
 ]
 
-
+//Entrega 3
 
 const form = document.querySelector("#form");
 const inputNumber = document.querySelector("#number-id");
 const btn = document.querySelector(".btn-form");
 const container = document.querySelector(".container-resultado");
 
+
+
+const SetLocalStorage = (pizza) => {localStorage.setItem("pizzas",JSON.stringify(pizza))}
+
+
 const createHTML = (pizza) => {
 
     return `
     <div class="card">
-        <h2>${pizza.nombre}</h2>
+        <img src="${pizza.img} " alt="pizza">
+        <div class="card-body">
+            <h2>${pizza.nombre}</h2>
+            <p>${pizza.ingredientes}</p>
+        </div>
         <h3>$${pizza.precio}</h3>
     </div> `
 }
 
 const RenderMsj = (pizza, classet) => {
-
-    container.innerHTML = createHTML(pizza);
+    
+    const pizza_render = createHTML(pizza);
+    container.innerHTML = pizza_render;
     container.classList.add(classet);
+    return pizza_render;
 
 }
 
@@ -147,27 +165,29 @@ const searchValue = (e) => {
     if(valueid === ""){
         console.log("Ingrese un valor")
         container.classList.remove("correct")
-        RenderMsj({nombre: "Ingrese un valor", precio: " -"}, "error");
-        
+        RenderMsj({nombre: "Ingrese un valor",id:undefined ,precio: " -",ingredientes: [],img:"./Img/error.jpg"},"error");
+        //SetLocalStorage({nombre: "Ingrese un valor",id:undefined ,precio: " -",ingredientes: [],img:"./Img/error.jpg"});
     }else if(valueid == 0){
         console.log("Ingrese un valor mayor a 0")
         container.classList.remove("correct")
-        RenderMsj({nombre: "Ingrese un valor mayor a 0", precio: " -"}, "error");
+        RenderMsj({nombre: "Ingrese un valor mayor a 0",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"}, "error");
+        //SetLocalStorage({nombre: "Ingrese un valor mayor a 0",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"});
     }else if(valueid > 7){
         console.log("Ingrese un valor mayor a 0")
         container.classList.remove("correct")
-        RenderMsj({nombre: "No hay pizzas con id mayor a 7", precio: " -"}, "error");
-       
+        RenderMsj({nombre: "No hay pizzas con id mayor a 7",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"}, "error");
+        //SetLocalStorage({nombre: "No hay pizzas con id mayor a 7",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"});
     }else{
         const pizza = Pizzas.find(pizza => pizza.id == valueid);
         container.classList.remove("error");
-        RenderMsj(pizza, "correct");
-       
+        SetLocalStorage(pizza);
+        RenderMsj(pizza, "correct");   
     }
     inputNumber.value = "";
 
 }
 
 
-
+pizza = JSON.parse(localStorage.getItem("pizzas"));
+RenderMsj(pizza, pizza.id > 0 && pizza.id <= 7 ? "correct" : "error" || pizza.id === undefined ? "error" : "correct");
 form.addEventListener("submit",searchValue);

@@ -28,6 +28,7 @@ section{
     justify-content: center;
     align-items: center;
     gap: 50px;
+    
 }
 h1{
     color:#ffff
@@ -79,21 +80,43 @@ small{
 
 
 .card{
-    padding: 50px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    border-radius: 15px;
+    
+    color: white;
+}
+.card img{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 2.5px solid #ff9900;
+}
+.card-body{
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-radius: 15px;
-    color: white;
+    max-width: 300px;
+}
+.card-body p{
+    color: gray;
+    text-align: center;
 }
 
+    
 .error{
     background: red;
     border-radius: 15px;
 }
 .correct{
-    background: green;
+    background: black;
     border-radius: 15px;
 }
+
