@@ -189,5 +189,6 @@ const searchValue = (e) => {
 
 
 pizza = JSON.parse(localStorage.getItem("pizzas"));
+console.log(pizza)
 RenderMsj(pizza, pizza.id > 0 && pizza.id <= 7 ? "correct" : "error"); //|| pizza.id === undefined ? "error" : "correct"
 form.addEventListener("submit",searchValue);
