@@ -134,6 +134,17 @@ const container = document.querySelector(".container-resultado");
 
 const SetLocalStorage = (pizza) => {localStorage.setItem("pizzas",JSON.stringify(pizza))}
 
+const createHTMLerror = (pizza) => {
+
+    return `
+    <div class="card">
+        <img src="${pizza.img} " alt="pizza">
+        <div class="card-body">
+            <h2>${pizza.nombre}</h2>
+        </div>
+    </div> `
+
+}
 
 const createHTML = (pizza) => {
 
@@ -150,48 +161,62 @@ const createHTML = (pizza) => {
 
 const RenderMsj = (pizza, classet) => {
     
+    if(pizza.id === undefined || pizza.id == 0 || pizza.id === ""){
+        console.log(pizza)
+        container.innerHTML = createHTMLerror(pizza);
+        container.classList.add(classet);
+    }else{
     const pizza_render = createHTML(pizza);
     container.innerHTML = pizza_render;
     container.classList.add(classet);
     return pizza_render;
+    }
 
 }
+
+
+
 
 const searchValue = (e) => {
 
     e.preventDefault();
     const valueid = inputNumber.value;
-    console.log(valueid);
+    const pizza = Pizzas.find(pizza => pizza.id == valueid);
     if(valueid === ""){
-        console.log("Ingrese un valor")
         container.classList.remove("correct")
-        RenderMsj({nombre: "Ingrese un valor",id:undefined ,precio: " -",ingredientes: [],img:"./Img/error.jpg"},"error");
-        //SetLocalStorage({nombre: "Ingrese un valor",id:undefined ,precio: " -",ingredientes: [],img:"./Img/error.jpg"});
+        RenderMsj({nombre: "No se ingreso ningun valor",id:"",img:"./Img/error.jpg"},"error");
+        //SetLocalStorage({nombre: "No se ingreso ningun valor",id:undefined,img:"./Img/error.jpg"});
     }else if(valueid == 0){
-        console.log("Ingrese un valor mayor a 0")
         container.classList.remove("correct")
-        RenderMsj({nombre: "Ingrese un valor mayor a 0",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"}, "error");
-        //SetLocalStorage({nombre: "Ingrese un valor mayor a 0",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"});
-    }else if(valueid > 7){
-        console.log("Ingrese un valor mayor a 0")
-        container.classList.remove("correct")
-        RenderMsj({nombre: "No hay pizzas con id mayor a 7",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"}, "error");
-        //SetLocalStorage({nombre: "No hay pizzas con id mayor a 7",id:valueid , precio: " -",ingredientes: [],img:"./Img/error.jpg"});
-    }else{
-        const pizza = Pizzas.find(pizza => pizza.id == valueid);
+        RenderMsj({nombre: "Ingrese un valor mayor a 0",id:valueid,img:"./Img/error.jpg"}, "error");
+        //SetLocalStorage({nombre: "Ingrese un valor mayor a 0",id:valueid ,img:"./Img/error.jpg"});
+    }else if(valueid > 0 && valueid <= Pizzas.length){
         container.classList.remove("error");
         SetLocalStorage(pizza);
-        RenderMsj(pizza, "correct");   
+        RenderMsj(pizza, "correct");  
+    }else{
+        container.classList.remove("correct")
+        RenderMsj({nombre: "No hay pizzas con el id ingresado",id:undefined,img:"./Img/error.jpg"}, "error");
+        //SetLocalStorage({nombre: "No hay pizzas con el id ingresado",id:undefined,img:"./Img/error.jpg"});  
     }
+
     inputNumber.value = "";
 
 }
 
 
-const pizza = JSON.parse(localStorage.getItem("pizzas"));
-console.log(!(pizza === null))
-if(!(pizza === null)){
-    RenderMsj(pizza, pizza.id > 0 && pizza.id < 8 ? "correct" : "error");
-};
 
-form.addEventListener("submit",searchValue);
+
+
+function init (){
+    const pizza = JSON.parse(localStorage.getItem("pizzas"));
+    if(!(pizza === null)){
+        console.log(pizza.id === undefined ? "error" : "correct")
+        RenderMsj(pizza, pizza.id === undefined || pizza.id === "" || pizza.id == 0 ? "error" : "correct");
+    }
+
+    form.addEventListener("submit",searchValue);
+
+}
+
+init();
