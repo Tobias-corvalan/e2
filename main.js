@@ -211,7 +211,6 @@ const searchValue = (e) => {
 function init (){
     const pizza = JSON.parse(localStorage.getItem("pizzas"));
     if(!(pizza === null)){
-        console.log(pizza.id === undefined ? "error" : "correct")
         RenderMsj(pizza, pizza.id === undefined || pizza.id === "" || pizza.id == 0 ? "error" : "correct");
     }
 
